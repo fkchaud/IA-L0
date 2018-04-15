@@ -17,6 +17,13 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
     LinkedList<NodoBusqueda>        listaAbierta;
     TrazaGenerica                   traza;
 
+    /**
+     * Expande los nodos hijos del nodo padre.
+     * Obtiene todos los nodos hijos del nodo padre. Como es Búsqueda de Grafo,
+     * sí realiza control de estados repetidos en lista cerrada.
+     * @param nodoPadre El nodo del cuál se desea obtener hijos.
+     * @return Lista de nodos hijos. Vacía si no existen nodos.
+     */
     protected LinkedList<NodoBusqueda> expandirNodo(NodoBusqueda nodoPadre) {
         //inicializa la lista de nodos
         LinkedList<NodoBusqueda> expandidos = new LinkedList<NodoBusqueda>(); 
@@ -24,6 +31,7 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
         for(Operador op : nodoPadre.getEstado().operadoresAplicables()) {
             //instancio el nuevo nodo, cuyo estado se obtiene aplicando la operación al estado del nodo padre
             NodoBusqueda n = new NodoBusqueda(nodoPadre.getEstado().aplicarOperador(op),nodoPadre,op);
+            //si no se encuentra el nodo en la lista cerrada...
             if(!listaCerrada.containsKey(n.getEstado())) {
                 //se settean la profundidad y el costo del nodo    
                 n.setProfundidad(nodoPadre.getProfundidad() + 1); 
@@ -32,10 +40,10 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
                 expandidos.add(n); 
             }
         }
-	//TRAZA muestro la lista de hijos del nodo padre expandido
+        //TRAZA muestro la lista de hijos del nodo padre expandido
         //devuelve la lista de nodos expandidos
         return expandidos;
-  }
+    }
 
     /**
      * Arma el camino recorrido hasta el nodo final.
