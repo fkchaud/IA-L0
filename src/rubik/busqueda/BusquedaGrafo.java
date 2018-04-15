@@ -31,8 +31,8 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
         for(Operador op : nodoPadre.getEstado().operadoresAplicables()) {
             //instancio el nuevo nodo, cuyo estado se obtiene aplicando la operación al estado del nodo padre
             NodoBusqueda n = new NodoBusqueda(nodoPadre.getEstado().aplicarOperador(op),nodoPadre,op);
-            //si no se encuentra el nodo en la lista cerrada...
-            if(!listaCerrada.containsKey(n.getEstado())) {
+            //revisión de estados repetidos en lista cerrada
+            if(busquedaGrafoA(n)) {
                 //se settean la profundidad y el costo del nodo    
                 n.setProfundidad(nodoPadre.getProfundidad() + 1); 
                 n.setCosto(nodoPadre.getCosto() + 1);         
@@ -43,6 +43,18 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
         //TRAZA muestro la lista de hijos del nodo padre expandido
         //devuelve la lista de nodos expandidos
         return expandidos;
+    }
+    
+    /**
+     * Verifica que el nodo no esté repetido en la lista cerrada.
+     * @param nodo Nodo a verificar.
+     * @return Verdadero si el nodo no está en la lista,
+     *      falso si el nodo está en la lista.
+     */
+    protected boolean busquedaGrafoA(NodoBusqueda nodo){
+        if(listaCerrada.containsKey(nodo.getEstado())){
+            return false;
+        } else return true;
     }
 
     /**
