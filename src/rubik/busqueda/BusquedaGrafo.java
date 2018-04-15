@@ -57,6 +57,17 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
         } else return true;
     }
     
+    /**
+     * Verifica que el nodo no esté repetido en la lista cerrada y abierta,
+     * y se queda con el mejor.
+     * Además de fijarse si está repetido, compara los costes acummulados de
+     * ambos nodos. Si el nodo actual está repetido pero tiene un coste menor,
+     * el nodo antiguo es eliminado de la lista y se procede como si no
+     * estuviera repetido.
+     * @param nodo Nodo a verificar.
+     * @return Verdadero si el nodo no está en la lista o estaba y fue retirado,
+     *      falso si el nodo está en la lista.
+     */
     protected boolean busquedaGrafoB(NodoBusqueda nodo){
         //¿el estado está en un nodo de la lista cerrada?
         boolean repetidoCerrada = listaCerrada.containsKey(nodo.getEstado());
@@ -69,8 +80,12 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
             //Si el nodo nuevo es mejor, tengo que borrar los viejos de la lista
             // y proceder como si no estuviera repetido.
             if (nodoViejo.getCosto() > nodo.getCosto()) {
-                //TO DO
-                //Eliminar el nodo actual y todos sus hijos de la lista cerrada
+                //eliminar el nodo viejo de la lista cerrada
+                listaCerrada.remove(nodoViejo.getEstado(),nodoViejo);
+                //No elimino los nodos hijos porque se van a ir eliminando
+                // a medida que se vayan evaluando los hijos del nodo actual
+                //hago como si no estuviera repetido en la lista cerrada
+                repetidoCerrada = false;
             }
         }
         //¿el estado está en un nodo de la lista abierta?
@@ -90,8 +105,8 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
                 }
             }
         }
-        
-        //TODO verificar el return xD
+        //si está repetido en la lista cerrada O en la lista abierta, devolverá
+        // falso. Si no está repetido en ninguna, devolverá verdadero.
         return !(repetidoCerrada || repetidoAbierta);
     }
 
