@@ -56,6 +56,44 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
             return false;
         } else return true;
     }
+    
+    protected boolean busquedaGrafoB(NodoBusqueda nodo){
+        //¿el estado está en un nodo de la lista cerrada?
+        boolean repetidoCerrada = listaCerrada.containsKey(nodo.getEstado());
+        
+        if(repetidoCerrada){
+            //obtengo el nodo previo con el mismo estado del nodo actual
+            NodoBusqueda nodoViejo = listaCerrada.get(nodo.getEstado());
+            //Si el nodo previo tiene un coste menor o igual al nodo actual,
+            // no necesito guardarlo porque el anterior es mejor.
+            //Si el nodo nuevo es mejor, tengo que borrar los viejos de la lista
+            // y proceder como si no estuviera repetido.
+            if (nodoViejo.getCosto() > nodo.getCosto()) {
+                //TO DO
+                //Eliminar el nodo actual y todos sus hijos de la lista cerrada
+            }
+        }
+        //¿el estado está en un nodo de la lista abierta?
+        boolean repetidoAbierta = false;
+        for (NodoBusqueda n : listaAbierta) {
+            if (n.getEstado() == nodo.getEstado()) {
+                repetidoAbierta = true;
+                //Si el nodo previo tiene un coste menor o igual al nodo actual,
+                // no necesito guardarlo porque el anterior es mejor.
+                //Si el nodo nuevo es mejor, tengo que borrar los viejos de la
+                // lista y proceder como si no estuviera repetido.
+                if (n.getCosto() > nodo.getCosto()) {
+                    //elimino el nodo viejo de la lista abierta
+                    listaAbierta.remove(n);
+                    //hago como si no estuviera repetido en la lista abierta
+                    repetidoAbierta = false;
+                }
+            }
+        }
+        
+        //TODO verificar el return xD
+        return !(repetidoCerrada || repetidoAbierta);
+    }
 
     /**
      * Arma el camino recorrido hasta el nodo final.
