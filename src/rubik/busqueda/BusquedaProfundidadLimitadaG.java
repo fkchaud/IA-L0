@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Vector;
 
-/* Estrategia de Busqueda en grafo en Profundidad Limitada, 
+/** Estrategia de Busqueda en grafo en Profundidad Limitada.
  * Implementacion de la interfaz Busqueda
  * Hereda de la clase abstracta BusquedaGrafo (generica independiente de la estrategia)
  * Implementa el metodo buscarSolucion() y devuelve un vector de operadores (solucion)
@@ -28,6 +28,14 @@ public class BusquedaProfundidadLimitadaG extends BusquedaGrafo implements Busqu
         return profundidadLimite;
     }
 
+    /**
+     * Busca un camino solución al problema.
+     * Utiliza la estrategia de búsqueda en profundidad limitada para buscar la
+     * solución al problema. Comprueba estados repetidos.
+     * @param inicial El estado inicial del problema.
+     * @return Camino solución al problema. Devuelve una lista vacía si no
+     *      encontró solución.
+     */
     @Override
     public Vector<Operador> buscarSolucion(Estado inicial){
         //Antes de comenzar la busqueda se contabiliza tiempo llamando metodo de la clase RendimientoBusqueda

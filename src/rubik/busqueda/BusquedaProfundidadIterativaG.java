@@ -10,9 +10,27 @@ import java.util.Vector;
 
 public class BusquedaProfundidadIterativaG extends BusquedaGrafo implements Busqueda {
 
+    /**
+     * Instancia de BPL.
+     * Esta instancia ejecutará la búsqueda, con niveles de profundidad
+     * diferentes.
+     */
     BusquedaProfundidadLimitadaG bpl = new BusquedaProfundidadLimitadaG();
+    /**
+     * Profundidad actual del límite de la BPL.
+     * La profundidad inicia en 0 y aumentará en 1 cada vez que se cumpla una
+     * iteración.
+     */
     int profundidadActual = 0;
 
+    /**
+     * Busca un camino solución al problema.
+     * Utiliza la estrategia de búsqueda en profundidad iterativa para buscar la
+     * solución al problema. Comprueba estados repetidos.
+     * @param inicial El estado inicial del problema.
+     * @return Camino solución al problema. Devuelve una lista vacía si no
+     *      encontró solución.
+     */
     @Override
     public Vector<Operador> buscarSolucion(Estado inicial){
         //Antes de comenzar la busqueda se contabiliza tiempo llamando metodo de la clase RendimientoBusqueda

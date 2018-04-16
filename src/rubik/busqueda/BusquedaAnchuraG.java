@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Vector;
 
-/* Estrategia de Busqueda en Grafo en Anchura, 
+/** Estrategia de Busqueda en Grafo en Anchura.
  * Implementacion de la interfaz Busqueda
  * Hereda de la clase abstracta BusquedaGrafo (generica independiente de la estrategia)
  * Implementa el metodo buscarSolucion() y devuelve un vector de operadores (solución)
@@ -13,6 +13,14 @@ import java.util.Vector;
 
 public class BusquedaAnchuraG extends BusquedaGrafo implements Busqueda {
 
+    /**
+     * Busca un camino solución al problema.
+     * Utiliza la estrategia de búsqueda en anchura para buscar la solución al
+     * problema. Comprueba estados repetidos.
+     * @param inicial El estado inicial del problema.
+     * @return Camino solución al problema. Devuelve una lista vacía si no
+     *      encontró solución.
+     */
     @Override
     public Vector<Operador> buscarSolucion(Estado inicial){
         //Antes de comenzar la busqueda se contabiliza tiempo llamando metodo de la clase RendimientoBusqueda

@@ -11,6 +11,14 @@ import java.util.Vector;
 
 public class BusquedaProfundidad extends BusquedaArbol implements Busqueda {
 
+    /**
+     * Busca un camino solución al problema.
+     * Utiliza la estrategia de búsqueda en profundidad para buscar la solución
+     * al problema.
+     * @param inicial El estado inicial del problema.
+     * @return Camino solución al problema. Devuelve una lista vacía si no
+     *      encontró solución.
+     */
     @Override
     public Vector<Operador> buscarSolucion(Estado inicial){
         //inicializa la búsqueda

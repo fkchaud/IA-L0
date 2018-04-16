@@ -4,13 +4,22 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Vector;
 
-/* Estrategia de Busqueda en grafo Costo Uniforme, 
+/** Estrategia de Busqueda en grafo Costo Uniforme.
  * Implementacion de la interfaz Busqueda
  * Hereda de la clase abstracta BusquedaGrafo (generica independiente de la estrategia)
  * Implementa el metodo buscarSolucion() y devuelve un vector de operadores (solucion)
  */
 
 public class BusquedaCosteUniformeG extends BusquedaGrafo implements Busqueda {
+    
+    /**
+     * Busca un camino solución al problema.
+     * Utiliza la estrategia de búsqueda de costo uniforme para buscar la
+     * solución al problema. Comprueba estados repetidos.
+     * @param inicial El estado inicial del problema.
+     * @return Camino solución al problema. Devuelve una lista vacía si no
+     *      encontró solución.
+     */
     @Override
     public Vector<Operador> buscarSolucion(Estado inicial){
         //Antes de comenzar se inicializa el tiempo para la medida de rendimiento
@@ -52,7 +61,13 @@ public class BusquedaCosteUniformeG extends BusquedaGrafo implements Busqueda {
           return encontrarCamino(nodoSolucion);
         }
     }
-
+    
+    /**
+     * Elimina y devueve el nodo de menor costo en la frontera.
+     * Busca cuál es el nodo de menor costo en la lista abierta o frontera, lo
+     * devuelve, y lo elimina de la lista.
+     * @return Nodo de menor costo en la frontera.
+     */
     private NodoBusqueda getNodoMenorCostoListaAbierta() {
         NodoBusqueda nodoMenorCosto = listaAbierta.get(0);
         
