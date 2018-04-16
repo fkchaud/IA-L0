@@ -22,6 +22,7 @@ public class BusquedaCosteUniforme extends BusquedaArbol implements Busqueda {
         nodoActual.setCosto(0);
         nodoActual.setProfundidad(0);
         traza = new TrazaGenerica(nodoActual);
+        abierta.add(nodoActual);
         
         while (!solucionEncontrada) {
             if (abierta.isEmpty()) {
