@@ -21,50 +21,50 @@ public class BusquedaAnchura extends BusquedaArbol implements Busqueda {
      *      encontró solución.
      */
     @Override
-  public Vector<Operador> buscarSolucion(Estado inicial){
-    //inicializa la búsqueda
-    reporteInicioBusqueda();
-    //inicializa la lista abierta vacía.
-    abierta = new LinkedList<NodoBusqueda>(); 
-    //inicializa un booleano para el resultado de la búsqueda
-    boolean solucionEncontrada = false;
-    //inicializa el estado inicial como nodo incial
-    NodoBusqueda nodoInicial = new NodoBusqueda(inicial,null,null);
-    nodoInicial.setCosto(0);
-    nodoInicial.setProfundidad(0);
-    //agrego el nodo inicial a la lista abierta
-    abierta.add(nodoInicial);
-    //inicializo un nodo actual vacío y un nodo solución vacío.
-    NodoBusqueda nodoActual;
-    NodoBusqueda nodoSolucion = null;       
-    do {
-        //saco el primer elemento de la lista abierta
-        nodoActual = abierta.pollFirst();
-        //aumento el contador de nodos explorados
-        reporteNodosExplorados();
-        //evalúo si el nodo es el objetivo
-        if(nodoActual.getEstado().esFinal()){
-            //si es el objetivo, cambio el booleano a true
-            solucionEncontrada = true;
-            nodoSolucion = nodoActual;
-        } else {
-            //si no es el objetivo, expando los nodos y continúo
-            abierta.addAll(expandirNodo(nodoActual));
+    public Vector<Operador> buscarSolucion(Estado inicial){
+        //inicializa la búsqueda
+        reporteInicioBusqueda();
+        //inicializa la lista abierta vacía.
+        abierta = new LinkedList<NodoBusqueda>(); 
+        //inicializa un booleano para el resultado de la búsqueda
+        boolean solucionEncontrada = false;
+        //inicializa el estado inicial como nodo incial
+        NodoBusqueda nodoInicial = new NodoBusqueda(inicial,null,null);
+        nodoInicial.setCosto(0);
+        nodoInicial.setProfundidad(0);
+        //agrego el nodo inicial a la lista abierta
+        abierta.add(nodoInicial);
+        //inicializo un nodo actual vacío y un nodo solución vacío.
+        NodoBusqueda nodoActual;
+        NodoBusqueda nodoSolucion = null;       
+        do {
+            //saco el primer elemento de la lista abierta
+            nodoActual = abierta.pollFirst();
+            //aumento el contador de nodos explorados
+            reporteNodosExplorados();
+            //evalúo si el nodo es el objetivo
+            if(nodoActual.getEstado().esFinal()){
+                //si es el objetivo, cambio el booleano a true
+                solucionEncontrada = true;
+                nodoSolucion = nodoActual;
+            } else {
+                //si no es el objetivo, expando los nodos y continúo
+                abierta.addAll(expandirNodo(nodoActual));
+            }
+        } while (!solucionEncontrada && abierta.size()>0);
+        // Se establece el contador de nodos sobrantes según la longitud de la lista abierta
+        reporteNodosSobrantes(abierta.size());
+        // Se para el temporizador
+        reporteFinBusqueda();
+
+        if(nodoSolucion == null) {
+            // si no hay solución, devuelve una lista vacía
+            return new Vector<Operador>();
         }
-    } while (!solucionEncontrada && abierta.size()>0);
-    // Se establece el contador de nodos sobrantes según la longitud de la lista abierta
-    reporteNodosSobrantes(abierta.size());
-    // Se para el temporizador
-    reporteFinBusqueda();
-    
-    if(nodoSolucion == null) {
-      // si no hay solución, devuelve una lista vacía
-      return new Vector<Operador>();
-    }
-    else {
-      // si hay solución, busca y devuelve el camino
-      return encontrarCamino(nodoSolucion); 
-    }
-  }	
+        else {
+            // si hay solución, busca y devuelve el camino
+            return encontrarCamino(nodoSolucion); 
+        }
+    }	
 
 }
