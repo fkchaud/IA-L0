@@ -10,19 +10,27 @@ import java.util.Vector;
 
 public class BusquedaProfundidadIterativaG extends BusquedaGrafo implements Busqueda {
 
-  BusquedaProfundidadLimitadaG busquedapl = new BusquedaProfundidadLimitadaG();
-  int profundidadActual = 0;
+    BusquedaProfundidadLimitadaG bpl = new BusquedaProfundidadLimitadaG();
+    int profundidadActual = 0;
 
     @Override
-public Vector<Operador> buscarSolucion(Estado inicial){
-    
-    Vector<Operador> caminoSolucion = null;
-                
-     /*
-     * ......
-     */
-
-    return caminoSolucion;
-	}
-
+    public Vector<Operador> buscarSolucion(Estado inicial){
+        //Antes de comenzar la busqueda se contabiliza tiempo llamando metodo de la clase RendimientoBusqueda
+        reporteInicioBusqueda();
+        Vector<Operador> caminoSolucion = null;
+        boolean solucionEncontrada = false;
+        while (!solucionEncontrada) {
+            bpl.setProfundidadLimite(profundidadActual);
+            caminoSolucion = bpl.buscarSolucion(inicial);
+            reporteNodosExplorados(bpl.getNroNodosExplorados());
+            reporteNodosSobrantes(bpl.getNroNodosSobrantes());
+            if (!caminoSolucion.isEmpty()) {
+                solucionEncontrada = true;
+            } else {
+                profundidadActual++;
+            }
+        }
+        reporteFinBusqueda();
+        return caminoSolucion;
+    }
 }
