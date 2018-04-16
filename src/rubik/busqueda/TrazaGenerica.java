@@ -10,6 +10,10 @@ import java.util.LinkedList;
  * Inteligencia Artificial 2016
  */
 public class TrazaGenerica {
+    /**
+     * Constructor.
+     * @param nodo Nodo raíz.
+     */
     public TrazaGenerica (NodoBusqueda nodo){
           System.out.println("\n/**** Accion: <estado,(costo),profundidad>    Por ejemplo Ui: <150,(2),2> ****/");
           System.out.println("\n    Nodo raiz: " + toStringNodo(nodo));

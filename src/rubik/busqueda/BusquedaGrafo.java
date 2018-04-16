@@ -41,6 +41,7 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
             }
         }
         //TRAZA muestro la lista de hijos del nodo padre expandido
+        traza.imprimirFinalIteracion(nodoPadre, expandidos);
         //devuelve la lista de nodos expandidos
         return expandidos;
     }
