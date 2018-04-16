@@ -29,29 +29,36 @@ public class BusquedaAnchura extends BusquedaArbol implements Busqueda {
         //inicializa un booleano para el resultado de la búsqueda
         boolean solucionEncontrada = false;
         //inicializa el estado inicial como nodo incial
-        NodoBusqueda nodoInicial = new NodoBusqueda(inicial,null,null);
-        nodoInicial.setCosto(0);
-        nodoInicial.setProfundidad(0);
+        NodoBusqueda nodoActual = new NodoBusqueda(inicial,null,null);
+        nodoActual.setCosto(0);
+        nodoActual.setProfundidad(0);
+        //traza
+        traza = new TrazaGenerica(nodoActual);
         //agrego el nodo inicial a la lista abierta
-        abierta.add(nodoInicial);
-        //inicializo un nodo actual vacío y un nodo solución vacío.
-        NodoBusqueda nodoActual;
+        abierta.add(nodoActual);
+        //inicializo un nodo solución vacío.
         NodoBusqueda nodoSolucion = null;       
-        do {
-            //saco el primer elemento de la lista abierta
-            nodoActual = abierta.pollFirst();
-            //aumento el contador de nodos explorados
-            reporteNodosExplorados();
-            //evalúo si el nodo es el objetivo
-            if(nodoActual.getEstado().esFinal()){
-                //si es el objetivo, cambio el booleano a true
-                solucionEncontrada = true;
-                nodoSolucion = nodoActual;
+        while (!solucionEncontrada) {
+            if (abierta.isEmpty()) {
+                break;
             } else {
-                //si no es el objetivo, expando los nodos y continúo
-                abierta.addAll(expandirNodo(nodoActual));
+                //traza
+                traza.imprimirInicioIteracion(abierta);
+                //saco el primer elemento de la lista abierta
+                nodoActual = abierta.pollFirst();
+                //aumento el contador de nodos explorados
+                reporteNodosExplorados();
+                //evalúo si el nodo es el objetivo
+                if(nodoActual.getEstado().esFinal()){
+                    //si es el objetivo, cambio el booleano a true
+                    solucionEncontrada = true;
+                    nodoSolucion = nodoActual;
+                } else {
+                    //si no es el objetivo, expando los nodos y continúo
+                    abierta.addAll(expandirNodo(nodoActual));
+                }
             }
-        } while (!solucionEncontrada && abierta.size()>0);
+        }
         // Se establece el contador de nodos sobrantes según la longitud de la lista abierta
         reporteNodosSobrantes(abierta.size());
         // Se para el temporizador
