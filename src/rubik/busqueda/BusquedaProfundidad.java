@@ -12,22 +12,57 @@ import java.util.Vector;
 public class BusquedaProfundidad extends BusquedaArbol implements Busqueda {
 
     @Override
-  public Vector<Operador> buscarSolucion(Estado inicial){
-    
-    abierta = new LinkedList<NodoBusqueda>();
-  
-    NodoBusqueda nodoSolucion = null;
-                
-     /*
-     * ......
-     */
+    public Vector<Operador> buscarSolucion(Estado inicial){
+        //inicializa la búsqueda
+        reporteInicioBusqueda();
+        //inicializa la lista abierta vacía.
+        abierta = new LinkedList<NodoBusqueda>(); 
+        //inicializa un booleano para el resultado de la búsqueda
+        boolean solucionEncontrada = false;
+        //inicializa el estado inicial como nodo incial
+        NodoBusqueda nodoActual = new NodoBusqueda(inicial,null,null);
+        nodoActual.setCosto(0);
+        nodoActual.setProfundidad(0);
+        //traza
+        traza = new TrazaGenerica(nodoActual);
+        //agrego el nodo inicial a la lista abierta
+        abierta.add(nodoActual);
+        //inicializo un nodo solución vacío.
+        NodoBusqueda nodoSolucion = null;       
+        while (!solucionEncontrada) {
+            if (abierta.isEmpty()) {
+                break;
+            } else {
+                //traza
+                traza.imprimirInicioIteracion(abierta);
+                //saco el primer elemento de la lista abierta
+                nodoActual = abierta.pollFirst();
+                //aumento el contador de nodos explorados
+                reporteNodosExplorados();
+                //evalúo si el nodo es el objetivo
+                if(nodoActual.getEstado().esFinal()){
+                    //si es el objetivo, cambio el booleano a true
+                    solucionEncontrada = true;
+                    nodoSolucion = nodoActual;
+                } else {
+                    //si no es el objetivo, expando los nodos y continúo
+                    abierta.addAll(0, expandirNodo(nodoActual));
+                }
+            }
+        }
+        // Se establece el contador de nodos sobrantes según la longitud de la lista abierta
+        reporteNodosSobrantes(abierta.size());
+        // Se para el temporizador
+        reporteFinBusqueda();
 
-    if(nodoSolucion == null) {
-      return new Vector<Operador>();
+        if(nodoSolucion == null) {
+            // si no hay solución, devuelve una lista vacía
+            return new Vector<Operador>();
+        }
+        else {
+            // si hay solución, busca y devuelve el camino
+            return encontrarCamino(nodoSolucion); 
+        }    
     }
-    else {
-      return encontrarCamino(nodoSolucion);
-    }
-  }
 
 }
