@@ -1,5 +1,6 @@
 package rubik.busqueda;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -23,58 +24,52 @@ public class BusquedaCosteUniforme extends BusquedaArbol implements Busqueda {
     public Vector<Operador> buscarSolucion(Estado inicial){
         //Antes de comenzar se inicializa el tiempo para la medida de rendimiento
         reporteInicioBusqueda();
+        //inicializo la listas abierta vacías
         abierta = new LinkedList<NodoBusqueda>();
+        //inicializa un booleano para el resultado de la búsqueda
         boolean solucionEncontrada = false;
+        //inicializo un nodo solución vacío (nulo)
         NodoBusqueda nodoSolucion = null;
+        //inicializa el estado inicial como nodo incial
         NodoBusqueda nodoActual = new NodoBusqueda(inicial, null, null);
         nodoActual.setCosto(0);
         nodoActual.setProfundidad(0);
+        //creo una Traza con el nodo raiz(actual)
         traza = new TrazaGenerica(nodoActual);
+        //agrego el nodo inicial a la lista abierta
         abierta.add(nodoActual);
-        
         while (!solucionEncontrada) {
             if (abierta.isEmpty()) {
                 break;
             } else {
+                //muestro estado de lista abierta al coienzo de cada interación
                 traza.imprimirInicioIteracion(abierta);
-                nodoActual = getNodoMenorCostoFrontera();
+                //saco el primer elemento de la lista abierta
+                nodoActual = abierta.pollFirst();
+                //Antes de evaluar si el nodo es solución contabilizo nodos explorados con la clase RendimientoBusqueda
                 reporteNodosExplorados();
+                //Si el nodo actual es el objetivo
                 if (nodoActual.getEstado().esFinal()) {
                     solucionEncontrada = true;
                     nodoSolucion = nodoActual;
-                } else {
+                }
+                // si el estado actual no es objetivo lo expando (genero y pongo hijos)
+                else {
                     abierta.addAll(expandirNodo(nodoActual));
+                    Collections.sort(abierta);
                 }
             }
         }
+        // al terminar contabilizo nodos sobrantes con la clase RendimientoBusqueda
         reporteNodosSobrantes(abierta.size());
+        // Contabilizo tiempo al finalizar busqueda con la clase RendimientoBusqueda
         reporteFinBusqueda();
+
         if(nodoSolucion == null) {
           return new Vector<Operador>();
         }
         else {
           return encontrarCamino(nodoSolucion);
         }
-    }
-
-    /**
-     * Elimina y devueve el nodo de menor costo en la frontera.
-     * Busca cuál es el nodo de menor costo en la lista abierta o frontera, lo
-     * devuelve, y lo elimina de la lista.
-     * @return Nodo de menor costo en la frontera.
-     */
-    private NodoBusqueda getNodoMenorCostoFrontera() {
-        NodoBusqueda nodoMenorCosto = abierta.get(0);
-        
-        for (NodoBusqueda n : abierta) {
-            if (n.getCosto() < nodoMenorCosto.getCosto()) {
-                nodoMenorCosto = n;
-            } else if (n.getCosto() == nodoMenorCosto.getCosto()) {
-                //TO DO gestionar desempates xD
-            }
-        }
-        
-        abierta.remove(nodoMenorCosto);
-        return nodoMenorCosto;
     }
 }

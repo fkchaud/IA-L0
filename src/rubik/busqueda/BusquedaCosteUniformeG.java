@@ -1,5 +1,6 @@
 package rubik.busqueda;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -46,7 +47,7 @@ public class BusquedaCosteUniformeG extends BusquedaGrafo implements Busqueda {
                 //muestro estado de lista abierta al coienzo de cada interación
                 traza.imprimirInicioIteracion(listaAbierta);
                 //saco el primer elemento de la lista abierta
-                nodoActual = getNodoMenorCostoListaAbierta();                       //TODOOOOOOOOO CORREGIR
+                nodoActual = listaAbierta.pollFirst();
                 //Antes de evaluar si el nodo es solución contabilizo nodos explorados con la clase RendimientoBusqueda
                 reporteNodosExplorados();
                 //Si el estado del nodo actual no está en la lista cerrada...
@@ -60,6 +61,7 @@ public class BusquedaCosteUniformeG extends BusquedaGrafo implements Busqueda {
                     else {
                         listaCerrada.put(nodoActual.getEstado(),nodoActual);
                         listaAbierta.addAll(expandirNodo(nodoActual));
+                        Collections.sort(listaAbierta);
                     }
                 }
             }
@@ -76,26 +78,4 @@ public class BusquedaCosteUniformeG extends BusquedaGrafo implements Busqueda {
           return encontrarCamino(nodoSolucion);
         }
     }
-    
-    /**
-     * Elimina y devueve el nodo de menor costo en la frontera.
-     * Busca cuál es el nodo de menor costo en la lista abierta o frontera, lo
-     * devuelve, y lo elimina de la lista.
-     * @return Nodo de menor costo en la frontera.
-     */
-    private NodoBusqueda getNodoMenorCostoListaAbierta() {
-        NodoBusqueda nodoMenorCosto = listaAbierta.get(0);
-        
-        for (NodoBusqueda n : listaAbierta) {
-            if (n.getCosto() < nodoMenorCosto.getCosto()) {
-                nodoMenorCosto = n;
-            } else if (n.getCosto() == nodoMenorCosto.getCosto()) {
-                //TO DO gestionar desempates xD
-            }
-        }
-        
-        listaAbierta.remove(nodoMenorCosto);
-        return nodoMenorCosto;
-    }
-
 }
