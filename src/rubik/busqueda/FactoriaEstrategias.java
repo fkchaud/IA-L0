@@ -86,7 +86,9 @@ public class FactoriaEstrategias {
             return b;
           case 7:
             System.out.println("BUSQUEDA PROFUNDIDAD INTERACTIVA EN GRAFO");
-            return new BusquedaProfundidadIterativaG();
+            BusquedaProfundidadIterativaG c = new BusquedaProfundidadIterativaG();
+            c.mejorProfundidadInicial();
+            return c;
           default:  return null;
         }
     } 

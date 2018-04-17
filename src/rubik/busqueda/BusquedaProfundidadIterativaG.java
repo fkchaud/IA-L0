@@ -22,6 +22,15 @@ public class BusquedaProfundidadIterativaG extends BusquedaGrafo implements Busq
      * iteración.
      */
     int profundidadActual = 0;
+    
+    /**
+     * Settea automáticamente el mejor límite para iniciar la iteración.
+     * Consideramos que el mejor límite es 0, porque el estado inicial podría
+     * ser la solución, y porque el libro indica que se inicia desde 0.
+     */
+    public void mejorProfundidadInicial () {
+        this.profundidadActual = 0;
+    }
 
     /**
      * Busca un camino solución al problema.
