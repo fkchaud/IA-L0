@@ -43,8 +43,7 @@ public class BusquedaAnchuraG extends BusquedaGrafo implements Busqueda {
         while(!solucionEncontrada) {
           if(listaAbierta.isEmpty()) {
             break;  
-          }
-          else {
+          } else {
             //muestro estado de lista abierta al coienzo de cada interación
             traza.imprimirInicioIteracion(listaAbierta);
             //saco el primer elemento de la lista abierta
@@ -52,7 +51,7 @@ public class BusquedaAnchuraG extends BusquedaGrafo implements Busqueda {
             //Antes de evaluar si el nodo es solución contabilizo nodos explorados con la clase RendimientoBusqueda
             reporteNodosExplorados();
             //Si el estado del nodo actual no está en la lista cerrada...
-            if(!listaCerrada.containsKey(nodoActual.getEstado())) {
+            if(busquedaGrafoA(nodoActual)) {
                 //Si el nodo actual es el objetivo
                 if (nodoActual.getEstado().esFinal()) {
                     solucionEncontrada = true;

@@ -24,36 +24,51 @@ public class BusquedaCosteUniformeG extends BusquedaGrafo implements Busqueda {
     public Vector<Operador> buscarSolucion(Estado inicial){
         //Antes de comenzar se inicializa el tiempo para la medida de rendimiento
         reporteInicioBusqueda();
+        //inicializo las listas abierta y cerrada vacías
         listaCerrada = new HashMap<Estado, NodoBusqueda>();
         listaAbierta = new LinkedList<NodoBusqueda>();
+        //inicializa un booleano para el resultado de la búsqueda
         boolean solucionEncontrada = false;
+        //inicializo un nodo solución vacío (nulo)
         NodoBusqueda nodoSolucion = null;
+        //inicializa el estado inicial como nodo incial
         NodoBusqueda nodoActual = new NodoBusqueda(inicial, null, null);
         nodoActual.setCosto(0);
         nodoActual.setProfundidad(0);
+        //creo una Traza con el nodo raiz(actual)
         traza = new TrazaGenerica(nodoActual);
+        //agrego el nodo inicial a la lista abierta
         listaAbierta.add(nodoActual);
-        
         while (!solucionEncontrada) {
             if (listaAbierta.isEmpty()) {
                 break;
             } else {
+                //muestro estado de lista abierta al coienzo de cada interación
                 traza.imprimirInicioIteracion(listaAbierta);
-                nodoActual = getNodoMenorCostoListaAbierta();
+                //saco el primer elemento de la lista abierta
+                nodoActual = getNodoMenorCostoListaAbierta();                       //TODOOOOOOOOO CORREGIR
+                //Antes de evaluar si el nodo es solución contabilizo nodos explorados con la clase RendimientoBusqueda
                 reporteNodosExplorados();
-                if (!listaCerrada.containsKey(nodoActual.getEstado())) {
+                //Si el estado del nodo actual no está en la lista cerrada...
+                if (busquedaGrafoA(nodoActual)) {
+                    //Si el nodo actual es el objetivo
                     if (nodoActual.getEstado().esFinal()) {
                         solucionEncontrada = true;
                         nodoSolucion = nodoActual;
-                    } else {
+                    }
+                    // si el estado actual no es objetivo lo expando (genero y pongo hijos)
+                    else {
                         listaCerrada.put(nodoActual.getEstado(),nodoActual);
                         listaAbierta.addAll(expandirNodo(nodoActual));
                     }
                 }
             }
         }
+        // al terminar contabilizo nodos sobrantes con la clase RendimientoBusqueda
         reporteNodosSobrantes(listaAbierta.size());
+        // Contabilizo tiempo al finalizar busqueda con la clase RendimientoBusqueda
         reporteFinBusqueda();
+
         if(nodoSolucion == null) {
           return new Vector<Operador>();
         }
