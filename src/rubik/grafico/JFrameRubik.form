@@ -211,17 +211,17 @@
       <Properties>
         <Property name="maximumRowCount" type="int" value="7"/>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="7">
+          <StringArray count="8">
             <StringItem index="0" value="B&#xfa;squeda Anchura en &#xc1;rbol"/>
             <StringItem index="1" value="B&#xfa;squeda Costo Uniforme en &#xc1;rbol"/>
             <StringItem index="2" value="B&#xfa;squeda Profundidad en &#xc1;rbol"/>
             <StringItem index="3" value="B&#xfa;squeda Anchura en Grafo"/>
             <StringItem index="4" value="B&#xfa;squeda Costo Uniforme en Grafo"/>
             <StringItem index="5" value="B&#xfa;squeda Profundidad en Grafo"/>
-            <StringItem index="6" value="B&#xfa;squeda Profundidad Interactiva en Grafo"/>
+            <StringItem index="6" value="B&#xfa;squeda Profundidad Limitada en Grafo"/>
+            <StringItem index="7" value="B&#xfa;squeda Profundidad Iterativa en Grafo"/>
           </StringArray>
         </Property>
-        <Property name="selectedIndex" type="int" value="3"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textMover">

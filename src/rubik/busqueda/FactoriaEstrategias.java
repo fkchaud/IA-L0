@@ -33,9 +33,13 @@ public class FactoriaEstrategias {
      */
     public static final int PROFUNDIDAD_GRAFO = 5; 
     /**
+     * Entero para la Estrategia de Busqueda en Profundidad Limitada en Grafo.
+     */
+    public static final int PROFUNDIDAD_LIMIT_GRAFO = 6;
+    /**
      * Entero para la Estrategia de Busqueda en Profundidad Iterativa en Grafo.
      */
-    public static final int PROFUNDIDAD_INTE_GRAFO = 6;    
+    public static final int PROFUNDIDAD_INTE_GRAFO = 7;    
     /**
      * ¿Se puede borrar?
      */
@@ -76,6 +80,9 @@ public class FactoriaEstrategias {
             System.out.println("BUSQUEDA PROFUNDIDAD EN GRAFO");
             return new BusquedaProfundidadG();
           case 6:
+            System.out.println("BUSQUEDA PROFUNDIDAD LIMITADA EN GRAFO");
+            return new BusquedaProfundidadLimitadaG();
+          case 7:
             System.out.println("BUSQUEDA PROFUNDIDAD INTERACTIVA EN GRAFO");
             return new BusquedaProfundidadIterativaG();
           default:  return null;
