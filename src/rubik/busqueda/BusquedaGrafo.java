@@ -32,7 +32,7 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
             //instancio el nuevo nodo, cuyo estado se obtiene aplicando la operación al estado del nodo padre
             NodoBusqueda n = new NodoBusqueda(nodoPadre.getEstado().aplicarOperador(op),nodoPadre,op);
             //revisión de estados repetidos en lista cerrada
-            if(busquedaGrafoA(n)) {
+            if(busquedaGrafoB(n)) {
                 //se settean la profundidad y el costo del nodo    
                 n.setProfundidad(nodoPadre.getProfundidad() + 1); 
                 n.setCosto(nodoPadre.getCosto() + 1);         
@@ -48,6 +48,7 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
     
     /**
      * Verifica que el nodo no esté repetido en la lista cerrada.
+     * Debe usarse luego de sacar uno de la lista abierta.
      * @param nodo Nodo a verificar.
      * @return Verdadero si el nodo no está en la lista,
      *      falso si el nodo está en la lista.
@@ -61,6 +62,7 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
     /**
      * Verifica que el nodo no esté repetido en la lista cerrada y abierta,
      * y se queda con el mejor.
+     * Debe usarse antes de insertar un nodo en la lista abierta.
      * Además de fijarse si está repetido, compara los costes acummulados de
      * ambos nodos. Si el nodo actual está repetido pero tiene un coste menor,
      * el nodo antiguo es eliminado de la lista y se procede como si no
@@ -73,12 +75,12 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
         //¿el estado está en un nodo de la lista cerrada?
         boolean repetidoCerrada = listaCerrada.containsKey(nodo.getEstado());
         
-        if(repetidoCerrada){
+        if(repetidoCerrada){ //si está en la lista cerrada...
             //obtengo el nodo previo con el mismo estado del nodo actual
             NodoBusqueda nodoViejo = listaCerrada.get(nodo.getEstado());
             //Si el nodo previo tiene un coste menor o igual al nodo actual,
-            // no necesito guardarlo porque el anterior es mejor.
-            //Si el nodo nuevo es mejor, tengo que borrar los viejos de la lista
+            // no necesito guardar el nuevo porque el anterior es mejor.
+            //Si el nodo nuevo es mejor, tengo que borrar el viejo de la lista
             // y proceder como si no estuviera repetido.
             if (nodoViejo.getCosto() > nodo.getCosto()) {
                 //eliminar el nodo viejo de la lista cerrada
@@ -89,18 +91,19 @@ public abstract class BusquedaGrafo  extends RendimientoBusqueda{
                 repetidoCerrada = false;
             }
         }
+        
         //¿el estado está en un nodo de la lista abierta?
         boolean repetidoAbierta = false;
-        for (NodoBusqueda n : listaAbierta) {
-            if (n.getEstado() == nodo.getEstado()) {
+        for (NodoBusqueda nodoViejo : listaAbierta) {
+            if (nodoViejo.getEstado() == nodo.getEstado()) {
                 repetidoAbierta = true;
                 //Si el nodo previo tiene un coste menor o igual al nodo actual,
-                // no necesito guardarlo porque el anterior es mejor.
+                // no necesito guardar el nuevo porque el anterior es mejor.
                 //Si el nodo nuevo es mejor, tengo que borrar los viejos de la
                 // lista y proceder como si no estuviera repetido.
-                if (n.getCosto() > nodo.getCosto()) {
+                if (nodoViejo.getCosto() > nodo.getCosto()) {
                     //elimino el nodo viejo de la lista abierta
-                    listaAbierta.remove(n);
+                    listaAbierta.remove(nodoViejo);
                     //hago como si no estuviera repetido en la lista abierta
                     repetidoAbierta = false;
                 }

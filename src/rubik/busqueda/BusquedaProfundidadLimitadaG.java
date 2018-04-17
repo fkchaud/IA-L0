@@ -27,6 +27,16 @@ public class BusquedaProfundidadLimitadaG extends BusquedaGrafo implements Busqu
     public int getProfundidadLimite() {
         return profundidadLimite;
     }
+    /**
+     * Settea automáticamente el mejor límite de la profundidad.
+     * El límite de la profundidad se settea en 26 porque es el llamado
+     * "Número de Dios", el número máximo de movimientos que son necesarios
+     * para resolver cualquier cubo rubik, con giros de 90°. (El número es 20
+     * para giros de 180°)
+     */
+    public void mejorProfundidadLimite(){
+        this.profundidadLimite = 26;
+    }
 
     /**
      * Busca un camino solución al problema.
@@ -58,8 +68,7 @@ public class BusquedaProfundidadLimitadaG extends BusquedaGrafo implements Busqu
         while(!solucionEncontrada) {
           if(listaAbierta.isEmpty()) {
             break;  
-          }
-          else {
+          } else {
             //muestro estado de lista abierta al coienzo de cada interación
             traza.imprimirInicioIteracion(listaAbierta);
             //saco el primer elemento de la lista abierta
@@ -67,7 +76,7 @@ public class BusquedaProfundidadLimitadaG extends BusquedaGrafo implements Busqu
             //Antes de evaluar si el nodo es solución contabilizo nodos explorados con la clase RendimientoBusqueda
             reporteNodosExplorados();
             //Si el estado del nodo actual no está en la lista cerrada...
-            if(!listaCerrada.containsKey(nodoActual.getEstado())) {
+            if(busquedaGrafoA(nodoActual)) {
                 //Si el nodo actual es el objetivo
                 if (nodoActual.getEstado().esFinal()) {
                     solucionEncontrada = true;
@@ -76,9 +85,7 @@ public class BusquedaProfundidadLimitadaG extends BusquedaGrafo implements Busqu
                 // si el estado actual no es objetivo lo expando (genero y pongo hijos)
                 else {
                     listaCerrada.put(nodoActual.getEstado(), nodoActual);
-                    if (nodoActual.getProfundidad() < profundidadLimite) {
-                        listaAbierta.addAll(0, expandirNodo(nodoActual));
-                    }
+                    listaAbierta.addAll(0, expandirNodo(nodoActual));
                 }
             }
           }
@@ -93,6 +100,15 @@ public class BusquedaProfundidadLimitadaG extends BusquedaGrafo implements Busqu
         }
         else {
           return encontrarCamino(nodoSolucion);
+        }
+    }
+    
+    @Override
+    protected LinkedList<NodoBusqueda> expandirNodo(NodoBusqueda nodoPadre) {
+        if (nodoPadre.getProfundidad() >= profundidadLimite) {
+            return new LinkedList<NodoBusqueda>();
+        } else {
+            return super.expandirNodo(nodoPadre);
         }
     }
 }

@@ -81,7 +81,9 @@ public class FactoriaEstrategias {
             return new BusquedaProfundidadG();
           case 6:
             System.out.println("BUSQUEDA PROFUNDIDAD LIMITADA EN GRAFO");
-            return new BusquedaProfundidadLimitadaG();
+            BusquedaProfundidadLimitadaG b = new BusquedaProfundidadLimitadaG();
+            b.mejorProfundidadLimite();
+            return b;
           case 7:
             System.out.println("BUSQUEDA PROFUNDIDAD INTERACTIVA EN GRAFO");
             return new BusquedaProfundidadIterativaG();
