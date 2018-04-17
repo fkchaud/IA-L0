@@ -62,9 +62,8 @@ public class Main {
      public static void main(String[] args) {
         Cubo cubo = new Cubo();
         // Describir para que son las lineas de codigo sigientes
-        long semilla = 621444;                                                  // Indica una semilla
-        cubo.rnd.setSeed(semilla);                                              // Settea una semilla para el
-                                                                                // generador de números aleatorios
+        long semilla = 40135;                                                   // Indica una semilla
+        cubo.rnd.setSeed(semilla);                                              // Settea una semilla para el generador de números aleatorios
         System.out.println("\nSEMILLA: "+semilla);                              // Muestra cuál es la semilla
         Vector<Movimiento> movsMezcla = cubo.mezclar(2);                        // Mezcla el cubo y devuelve los movimientos realizados
         System.out.println("\nMOVIMIENTOS:");
@@ -72,8 +71,7 @@ public class Main {
             System.out.print(m.toString() + " ");                               // Muestra la lista de movimientos
         }
         System.out.println();                                                   // Muestra línea vacía
-        System.out.println("CUBO INICIAL:\n" + cubo.toString());                // Muestra todas las caras del cubo, cómo quedan
-                                                                                // en el estado inicial
+        System.out.println("CUBO INICIAL:\n" + cubo.toString());                // Muestra todas las caras del cubo, cómo quedan en el estado inicial
         
         // Describir para que son las lineas de codigo sigientes
         Problema problema = new Problema(                                       // Crea una instancia de Problema, con el cubo mezclado 
